@@ -1,0 +1,31 @@
+# Node & NPM Dependencies
+node_modules/
+package-lock.json
+
+# Build Outputs & Release Distribution Packages
+# Note: Binaries > 100MB are uploaded to GitHub Releases via gh release create
+dist/
+dist-release/
+
+# Logs & Runtime Audits
+*.log
+desktop-runner.log
+resize-audit.log
+movement-audit.log
+advanced-audit.log
+
+# Staged tasks & temporary outputs
+opendisk-winpe-task.json
+detected-storage.json
+
+# Rust & Tauri Build Artifacts
+src-tauri/target/
+
+# IDE & OS Metadata
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.swp
+*.suo
+*.user

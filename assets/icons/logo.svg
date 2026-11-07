@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bezelGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1E293B" />
+      <stop offset="100%" stop-color="#090D16" />
+    </linearGradient>
+    <linearGradient id="osSectorGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38BDF8" />
+      <stop offset="100%" stop-color="#0284C7" />
+    </linearGradient>
+    <linearGradient id="dataSectorGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#60A5FA" />
+      <stop offset="100%" stop-color="#2563EB" />
+    </linearGradient>
+    <linearGradient id="recoverySectorGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#A78BFA" />
+      <stop offset="100%" stop-color="#7C3AED" />
+    </linearGradient>
+    <linearGradient id="unallocatedSectorGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#34D399" />
+      <stop offset="100%" stop-color="#059669" />
+    </linearGradient>
+    <linearGradient id="hubGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#334155" />
+      <stop offset="100%" stop-color="#0F172A" />
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Outer Bezel -->
+  <rect x="24" y="24" width="464" height="464" rx="96" fill="url(#bezelGrad)" stroke="#38BDF8" stroke-width="4" stroke-opacity="0.3" />
+  
+  <!-- Outer Platter Ring -->
+  <circle cx="256" cy="256" r="200" fill="#0A0F1D" stroke="#1E293B" stroke-width="6" />
+
+  <!-- Partition Sectors (Drawn as arcs) -->
+  <!-- Sector 1: OS (Cyan) -->
+  <path d="M 256 76 A 180 180 0 0 1 432 216 L 354 233 A 100 100 0 0 0 256 156 Z" fill="url(#osSectorGrad)" filter="url(#glow)" />
+  
+  <!-- Sector 2: Data (Blue) -->
+  <path d="M 434 226 A 180 180 0 0 1 318 430 L 290 352 A 100 100 0 0 0 356 240 Z" fill="url(#dataSectorGrad)" />
+
+  <!-- Sector 3: Recovery (Purple) -->
+  <path d="M 306 434 A 180 180 0 0 1 122 396 L 181 334 A 100 100 0 0 0 284 354 Z" fill="url(#recoverySectorGrad)" />
+
+  <!-- Sector 4: Unallocated (Emerald) -->
+  <path d="M 114 386 A 180 180 0 0 1 246 76 L 250 156 A 100 100 0 0 0 176 328 Z" fill="url(#unallocatedSectorGrad)" />
+
+  <!-- Spindle Hub -->
+  <circle cx="256" cy="256" r="80" fill="url(#hubGrad)" stroke="#38BDF8" stroke-width="3" stroke-opacity="0.6" />
+  <circle cx="256" cy="256" r="42" fill="#0284C7" />
+  <circle cx="256" cy="256" r="22" fill="#38BDF8" />
+</svg>

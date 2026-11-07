@@ -5,24 +5,24 @@ import {
   Cpu, 
   ShieldAlert, 
   Lock, 
-  PlusCircle,
-  KeyRound,
-  MoveHorizontal,
-  Move,
-  Sliders,
-  Maximize2,
-  Minimize2,
-  Trash2,
-  Settings2,
-  CheckCircle2,
-  Info
+  PlusCircle, 
+  KeyRound, 
+  MoveHorizontal, 
+  Move, 
+  Sliders, 
+  Maximize2, 
+  Minimize2, 
+  Trash2, 
+  Settings2, 
+  CheckCircle2, 
+  Info 
 } from "lucide-react";
 
 export function PartitionTable({ 
   disk, 
   selectedPartitionId, 
-  onSelectPartition,
-  onActionClick
+  onSelectPartition, 
+  onActionClick 
 }) {
   const formatBytes = (bytes) => {
     if (!bytes || bytes === 0) return "0 B";
@@ -39,29 +39,29 @@ export function PartitionTable({
       case "EFI":
         return <span className="badge badge-warning flex items-center gap-1"><Cpu className="w-3 h-3" /> EFI System</span>;
       case "RECOVERY":
-        return <span className="badge bg-purple-500/20 text-purple-300 border border-purple-500/30 flex items-center gap-1"><ShieldAlert className="w-3 h-3" /> Recovery</span>;
+        return <span className="badge bg-purple-500/20 text-purple-400 border border-purple-500/30 flex items-center gap-1"><ShieldAlert className="w-3 h-3" /> Recovery</span>;
       case "MSR":
-        return <span className="badge bg-slate-700 text-slate-300 border border-slate-600 flex items-center gap-1"><Lock className="w-3 h-3" /> Reserved</span>;
+        return <span className="badge bg-slate-500/20 text-slate-400 border border-slate-500/30 flex items-center gap-1"><Lock className="w-3 h-3" /> Reserved</span>;
       case "UNALLOCATED":
       default:
-        return <span className="badge bg-slate-800 text-slate-400 border border-slate-700 flex items-center gap-1"><PlusCircle className="w-3 h-3" /> Unallocated</span>;
+        return <span className="badge bg-slate-500/10 text-[var(--text-muted)] border border-slate-500/20 flex items-center gap-1"><PlusCircle className="w-3 h-3" /> Unallocated</span>;
     }
   };
 
   return (
     <div className="glass-card overflow-hidden">
       {/* Table Title Bar */}
-      <div className="px-4 py-3 bg-[#111728] border-b border-[#242E49] flex items-center justify-between">
+      <div className="px-4 py-3 bg-[var(--bg-surface-elevated)] border-b border-[var(--border-subtle)] flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <h3 className="text-xs font-bold text-white uppercase tracking-wider">
+          <h3 className="text-xs font-bold text-[var(--text-primary)] uppercase tracking-wider">
             Partition Table & Extent Registry
           </h3>
-          <span className="text-[11px] text-slate-400 font-mono">
+          <span className="text-[11px] text-[var(--text-muted)] font-mono">
             Disk {disk.id} ({disk.partitionStyle})
           </span>
         </div>
-        <div className="text-xs text-slate-400 flex items-center gap-1.5">
-          <Info className="w-3.5 h-3.5 text-blue-400" />
+        <div className="text-xs text-[var(--text-secondary)] flex items-center gap-1.5">
+          <Info className="w-3.5 h-3.5 text-blue-500" />
           <span>Click any row to inspect technical geometry</span>
         </div>
       </div>
@@ -69,7 +69,7 @@ export function PartitionTable({
       {/* Table */}
       <div className="overflow-x-auto">
         <table className="w-full text-left text-xs">
-          <thead className="bg-[#0B0F1A] text-slate-400 border-b border-[#242E49] text-[11px] uppercase tracking-wider">
+          <thead className="bg-[var(--bg-surface)] text-[var(--text-secondary)] border-b border-[var(--border-subtle)] text-[11px] uppercase tracking-wider">
             <tr>
               <th className="py-2.5 px-3 font-semibold">Volume / Label</th>
               <th className="py-2.5 px-3 font-semibold">Partition Type</th>
@@ -81,7 +81,7 @@ export function PartitionTable({
               <th className="py-2.5 px-3 font-semibold text-right">Actions</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-[#1D253B]">
+          <tbody className="divide-y divide-[var(--border-subtle)]">
             {disk.partitions.map((part) => {
               const isSelected = selectedPartitionId === part.id;
               const isUnallocated = part.category === "UNALLOCATED";
@@ -95,26 +95,26 @@ export function PartitionTable({
                   className={`transition-colors cursor-pointer ${
                     isSelected 
                       ? "bg-blue-600/15 border-l-4 border-l-blue-500" 
-                      : "hover:bg-[#161D31]"
+                      : "hover:bg-[var(--bg-surface-hover)]"
                   }`}
                 >
                   {/* Volume / Label */}
                   <td className="py-3 px-3">
                     <div className="flex items-center gap-2">
                       {part.volumeLetter ? (
-                        <span className="w-6 h-6 rounded bg-blue-500/20 text-blue-300 font-bold font-mono text-xs flex items-center justify-center border border-blue-500/30">
+                        <span className="w-6 h-6 rounded bg-blue-500/20 text-blue-500 font-bold font-mono text-xs flex items-center justify-center border border-blue-500/30">
                           {part.volumeLetter[0]}
                         </span>
                       ) : (
-                        <span className="w-6 h-6 rounded bg-slate-800 text-slate-400 text-xs flex items-center justify-center border border-slate-700">
+                        <span className="w-6 h-6 rounded bg-[var(--bg-surface-elevated)] text-[var(--text-muted)] text-xs flex items-center justify-center border border-[var(--border-subtle)]">
                           -
                         </span>
                       )}
                       <div>
-                        <span className="font-semibold text-white block">
+                        <span className="font-semibold text-[var(--text-primary)] block">
                           {part.label}
                         </span>
-                        <span className="text-[10px] text-slate-400 font-mono">
+                        <span className="text-[10px] text-[var(--text-muted)] font-mono">
                           {isUnallocated ? "Free Block" : `Partition ${part.partitionNumber}`}
                         </span>
                       </div>
@@ -127,12 +127,12 @@ export function PartitionTable({
                   </td>
 
                   {/* Filesystem */}
-                  <td className="py-3 px-3 font-mono font-medium text-slate-300">
+                  <td className="py-3 px-3 font-mono font-medium text-[var(--text-secondary)]">
                     {part.fsType}
                   </td>
 
                   {/* Capacity */}
-                  <td className="py-3 px-3 font-mono font-semibold text-white">
+                  <td className="py-3 px-3 font-mono font-semibold text-[var(--text-primary)]">
                     {formatBytes(part.sizeBytes)}
                   </td>
 
@@ -140,11 +140,11 @@ export function PartitionTable({
                   <td className="py-3 px-3">
                     {!isUnallocated && part.category !== "MSR" ? (
                       <div className="w-32">
-                        <div className="flex justify-between text-[10px] text-slate-300 font-mono mb-1">
+                        <div className="flex justify-between text-[10px] text-[var(--text-secondary)] font-mono mb-1">
                           <span>{formatBytes(part.usedBytes)}</span>
                           <span>{usagePercent}%</span>
                         </div>
-                        <div className="w-full bg-slate-800 rounded-full h-1.5 overflow-hidden">
+                        <div className="w-full bg-[var(--border-subtle)] rounded-full h-1.5 overflow-hidden">
                           <div 
                             className={`h-full rounded-full ${
                               usagePercent > 85 ? "bg-rose-500" : usagePercent > 65 ? "bg-amber-400" : "bg-blue-500"
@@ -154,12 +154,12 @@ export function PartitionTable({
                         </div>
                       </div>
                     ) : (
-                      <span className="text-slate-500 text-[11px] font-mono">N/A</span>
+                      <span className="text-[var(--text-muted)] text-[11px] font-mono">N/A</span>
                     )}
                   </td>
 
                   {/* Free Space */}
-                  <td className="py-3 px-3 font-mono text-slate-300">
+                  <td className="py-3 px-3 font-mono text-[var(--text-secondary)]">
                     {formatBytes(freeBytes)}
                   </td>
 
@@ -171,7 +171,7 @@ export function PartitionTable({
                           <KeyRound className="w-3 h-3" /> BitLocker
                         </span>
                       )}
-                      <span className="text-[11px] text-slate-400 truncate max-w-[150px]">
+                      <span className="text-[11px] text-[var(--text-muted)] truncate max-w-[150px]">
                         {part.status}
                       </span>
                     </div>
@@ -184,21 +184,21 @@ export function PartitionTable({
                         <>
                           <button
                             onClick={() => onActionClick("RESIZE_MOVE", part)}
-                            className="btn btn-ghost btn-sm p-1.5 hover:text-blue-400"
+                            className="btn btn-ghost btn-sm p-1.5 hover:text-blue-500"
                             title="Resize Partition"
                           >
                             <Sliders className="w-3.5 h-3.5" />
                           </button>
                           <button
                             onClick={() => onActionClick("MOVE", part)}
-                            className="btn btn-ghost btn-sm p-1.5 hover:text-cyan-400"
+                            className="btn btn-ghost btn-sm p-1.5 hover:text-cyan-500"
                             title="Move Partition"
                           >
                             <Move className="w-3.5 h-3.5" />
                           </button>
                           <button
                             onClick={() => onActionClick("FORMAT", part)}
-                            className="btn btn-ghost btn-sm p-1.5 hover:text-rose-400"
+                            className="btn btn-ghost btn-sm p-1.5 hover:text-rose-500"
                             title="Format Volume"
                           >
                             <Trash2 className="w-3.5 h-3.5" />
@@ -216,7 +216,7 @@ export function PartitionTable({
                       )}
                       <button
                         onClick={() => onActionClick("PROPERTIES", part)}
-                        className="btn btn-ghost btn-sm p-1.5 hover:text-white"
+                        className="btn btn-ghost btn-sm p-1.5 hover:text-[var(--text-primary)]"
                         title="Inspect Properties"
                       >
                         <Settings2 className="w-3.5 h-3.5" />
@@ -232,4 +232,3 @@ export function PartitionTable({
     </div>
   );
 }
-

@@ -18,11 +18,8 @@ export function GraphicalPartitionMap({
 }) {
   const totalDiskBytes = disk.totalSizeBytes;
 
-  // Visual helper to calculate width percentage with a sensible visual minimum
-  // (so small 100 MB EFI or 16 MB MSR remain clearly clickable and readable)
   const getPartitionWidthPercent = (partitionBytes) => {
     const rawPercent = (partitionBytes / totalDiskBytes) * 100;
-    // Minimum 3.5% width so tiny partitions remain easily clickable
     return Math.max(rawPercent, 3.8);
   };
 
@@ -83,19 +80,19 @@ export function GraphicalPartitionMap({
   return (
     <div className="glass-card p-4 space-y-3">
       {/* Header & Legend */}
-      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#242E49] pb-3">
+      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--border-subtle)] pb-3">
         <div className="flex items-center gap-2">
-          <HardDrive className="w-4 h-4 text-blue-400" />
-          <h2 className="text-sm font-bold text-white tracking-wide">
+          <HardDrive className="w-4 h-4 text-blue-500" />
+          <h2 className="text-sm font-bold text-[var(--text-primary)] tracking-wide">
             Graphical Partition Map — Disk {disk.id}
           </h2>
-          <span className="text-xs text-slate-400">
+          <span className="text-xs text-[var(--text-muted)]">
             ({disk.partitions.length} Extents)
           </span>
         </div>
 
         {/* Legend */}
-        <div className="flex flex-wrap items-center gap-3 text-[11px] text-slate-300">
+        <div className="flex flex-wrap items-center gap-3 text-[11px] text-[var(--text-secondary)]">
           <div className="flex items-center gap-1.5">
             <span className="w-2.5 h-2.5 rounded-sm bg-blue-500 shadow-sm shadow-blue-500/50" />
             <span>Windows (C:)</span>
@@ -117,14 +114,14 @@ export function GraphicalPartitionMap({
             <span>MSR</span>
           </div>
           <div className="flex items-center gap-1.5">
-            <span className="w-2.5 h-2.5 rounded-sm border border-dashed border-slate-400 bg-slate-900" />
+            <span className="w-2.5 h-2.5 rounded-sm border border-dashed border-slate-400 bg-slate-800" />
             <span>Unallocated</span>
           </div>
         </div>
       </div>
 
       {/* Graphical Bar */}
-      <div className="w-full h-24 bg-[#090D16] border border-[#242E49] rounded-xl p-1.5 flex gap-1.5 overflow-hidden shadow-inner">
+      <div className="w-full h-24 bg-[var(--bg-app)] border border-[var(--border-subtle)] rounded-xl p-1.5 flex gap-1.5 overflow-hidden shadow-inner">
         {disk.partitions.map((part) => {
           const isSelected = selectedPartitionId === part.id;
           const styles = getCategoryStyles(part.category, isSelected, part.isBitLocker);
@@ -132,12 +129,10 @@ export function GraphicalPartitionMap({
           const widthPercent = getPartitionWidthPercent(part.sizeBytes);
           const isUnallocated = part.category === "UNALLOCATED";
 
-          // Calculate internal usage percentage
           const usagePercent = part.sizeBytes > 0 && part.usedBytes 
             ? Math.round((part.usedBytes / part.sizeBytes) * 100) 
             : 0;
 
-          // Display label
           const sizeDisplay = part.sizeBytes >= 1e9 
             ? `${(part.sizeBytes / 1e9).toFixed(1)} GB`
             : `${(part.sizeBytes / 1e6).toFixed(0)} MB`;
@@ -153,7 +148,7 @@ export function GraphicalPartitionMap({
               }}
               className={`h-full rounded-lg relative cursor-pointer select-none transition-all duration-150 flex flex-col justify-between p-2 group ${
                 isSelected 
-                  ? "ring-2 ring-white/80 ring-offset-2 ring-offset-[#090D16] shadow-xl z-10 scale-[1.01]" 
+                  ? "ring-2 ring-blue-400 ring-offset-2 ring-offset-[var(--bg-app)] shadow-xl z-10 scale-[1.01]" 
                   : "hover:brightness-110 opacity-95 hover:opacity-100"
               }`}
             >
@@ -172,7 +167,7 @@ export function GraphicalPartitionMap({
                 )}
               </div>
 
-              {/* Middle: Usage Bar (for formatted partitions) */}
+              {/* Middle: Usage Bar */}
               {!isUnallocated && part.category !== "MSR" && (
                 <div className="w-full bg-black/30 rounded-full h-1.5 overflow-hidden my-auto border border-white/10">
                   <div 
@@ -183,7 +178,7 @@ export function GraphicalPartitionMap({
               )}
 
               {isUnallocated && (
-                <div className="flex items-center justify-center text-[10px] text-slate-400 font-medium">
+                <div className="flex items-center justify-center text-[10px] text-slate-300 font-medium">
                   <span>+ Free Space</span>
                 </div>
               )}
@@ -213,11 +208,10 @@ export function GraphicalPartitionMap({
         })}
       </div>
 
-      <div className="flex items-center justify-between text-[11px] text-slate-500 font-mono px-1">
+      <div className="flex items-center justify-between text-[11px] text-[var(--text-muted)] font-mono px-1">
         <span>Offset: LBA 0 (Protective MBR / Primary GPT)</span>
         <span>End of Disk: LBA {(disk.totalSizeBytes / disk.sectorSize).toLocaleString()} (Backup GPT)</span>
       </div>
     </div>
   );
 }
-

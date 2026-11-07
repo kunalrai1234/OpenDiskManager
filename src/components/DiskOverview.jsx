@@ -35,17 +35,17 @@ export function DiskOverview({ disk, allDisks }) {
         {/* Total Capacity Card */}
         <div className="glass-card p-3.5 flex items-center justify-between">
           <div>
-            <p className="text-[11px] font-medium text-slate-400 uppercase tracking-wider">
+            <p className="text-[11px] font-medium text-[var(--text-secondary)] uppercase tracking-wider">
               Total Disk Space
             </p>
-            <p className="text-xl font-bold font-mono text-white mt-0.5">
-              {diskSizeGb} <span className="text-xs font-normal text-slate-400">GB</span>
+            <p className="text-xl font-bold font-mono text-[var(--text-primary)] mt-0.5">
+              {diskSizeGb} <span className="text-xs font-normal text-[var(--text-muted)]">GB</span>
             </p>
-            <p className="text-[10px] text-slate-500 font-mono mt-0.5">
+            <p className="text-[10px] text-[var(--text-muted)] font-mono mt-0.5">
               {(disk.totalSizeBytes / (1024**3)).toFixed(1)} GiB (Binary)
             </p>
           </div>
-          <div className="w-10 h-10 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400">
+          <div className="w-10 h-10 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-500">
             <HardDrive className="w-5 h-5" />
           </div>
         </div>
@@ -53,17 +53,17 @@ export function DiskOverview({ disk, allDisks }) {
         {/* Partitioned / Allocated Space Card */}
         <div className="glass-card p-3.5 flex items-center justify-between">
           <div>
-            <p className="text-[11px] font-medium text-slate-400 uppercase tracking-wider">
+            <p className="text-[11px] font-medium text-[var(--text-secondary)] uppercase tracking-wider">
               Allocated Partitions
             </p>
-            <p className="text-xl font-bold font-mono text-emerald-400 mt-0.5">
-              {allocatedGb} <span className="text-xs font-normal text-slate-400">GB</span>
+            <p className="text-xl font-bold font-mono text-emerald-500 mt-0.5">
+              {allocatedGb} <span className="text-xs font-normal text-[var(--text-muted)]">GB</span>
             </p>
-            <p className="text-[10px] text-slate-500 mt-0.5">
+            <p className="text-[10px] text-[var(--text-muted)] mt-0.5">
               {totalPartitionsCount} Active Partition{totalPartitionsCount > 1 ? "s" : ""}
             </p>
           </div>
-          <div className="w-10 h-10 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400">
+          <div className="w-10 h-10 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-500">
             <Layers className="w-5 h-5" />
           </div>
         </div>
@@ -71,17 +71,17 @@ export function DiskOverview({ disk, allDisks }) {
         {/* Unallocated Space Card */}
         <div className="glass-card p-3.5 flex items-center justify-between">
           <div>
-            <p className="text-[11px] font-medium text-slate-400 uppercase tracking-wider">
+            <p className="text-[11px] font-medium text-[var(--text-secondary)] uppercase tracking-wider">
               Unallocated Space
             </p>
-            <p className="text-xl font-bold font-mono text-amber-400 mt-0.5">
-              {unallocatedGb} <span className="text-xs font-normal text-slate-400">GB</span>
+            <p className="text-xl font-bold font-mono text-amber-500 mt-0.5">
+              {unallocatedGb} <span className="text-xs font-normal text-[var(--text-muted)]">GB</span>
             </p>
-            <p className="text-[10px] text-slate-500 mt-0.5">
+            <p className="text-[10px] text-[var(--text-muted)] mt-0.5">
               {((unallocatedBytes / disk.totalSizeBytes) * 100).toFixed(1)}% Free on Platter/Flash
             </p>
           </div>
-          <div className="w-10 h-10 rounded-lg bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400">
+          <div className="w-10 h-10 rounded-lg bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-500">
             <Database className="w-5 h-5" />
           </div>
         </div>
@@ -89,56 +89,55 @@ export function DiskOverview({ disk, allDisks }) {
         {/* S.M.A.R.T. Health Card */}
         <div className="glass-card p-3.5 flex items-center justify-between">
           <div>
-            <p className="text-[11px] font-medium text-slate-400 uppercase tracking-wider">
+            <p className="text-[11px] font-medium text-[var(--text-secondary)] uppercase tracking-wider">
               Drive S.M.A.R.T. Health
             </p>
-            <p className="text-xl font-bold font-mono text-cyan-400 mt-0.5 flex items-center gap-1.5">
+            <p className="text-xl font-bold font-mono text-cyan-500 mt-0.5 flex items-center gap-1.5">
               <span>{disk.healthPercent}%</span>
-              <span className="text-xs font-semibold px-1.5 py-0.5 rounded bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
+              <span className="text-xs font-semibold px-1.5 py-0.5 rounded bg-emerald-500/15 text-emerald-500 border border-emerald-500/30">
                 Good
               </span>
             </p>
-            <p className="text-[10px] text-slate-500 flex items-center gap-1 mt-0.5">
-              <Thermometer className="w-3 h-3 text-amber-400" />
+            <p className="text-[10px] text-[var(--text-muted)] flex items-center gap-1 mt-0.5">
+              <Thermometer className="w-3 h-3 text-amber-500" />
               <span>{disk.temperatureCelsius}°C</span>
-              <span className="text-slate-600">|</span>
-              <Clock className="w-3 h-3 text-slate-400" />
+              <span className="text-[var(--text-muted)]">|</span>
+              <Clock className="w-3 h-3 text-[var(--text-muted)]" />
               <span>{disk.powerOnHours} hrs</span>
             </p>
           </div>
-          <div className="w-10 h-10 rounded-lg bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400">
+          <div className="w-10 h-10 rounded-lg bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-500">
             <Activity className="w-5 h-5" />
           </div>
         </div>
       </div>
 
       {/* Selected Disk Technical Profile Strip */}
-      <div className="bg-[#101626] border border-[#242E49] rounded-lg px-4 py-2.5 flex flex-wrap items-center justify-between text-xs gap-3">
+      <div className="bg-[var(--bg-surface-elevated)] border border-[var(--border-subtle)] rounded-lg px-4 py-2.5 flex flex-wrap items-center justify-between text-xs gap-3">
         <div className="flex items-center gap-3">
-          <span className="font-bold text-white text-sm flex items-center gap-2">
+          <span className="font-bold text-[var(--text-primary)] text-sm flex items-center gap-2">
             Disk {disk.id}: {disk.model}
           </span>
-          <span className="font-mono text-slate-400 bg-slate-800/80 px-2 py-0.5 rounded text-[11px]">
+          <span className="font-mono text-[var(--text-secondary)] bg-[var(--bg-surface)] px-2 py-0.5 rounded text-[11px] border border-[var(--border-subtle)]">
             {disk.path}
           </span>
         </div>
 
-        <div className="flex items-center gap-4 text-slate-300 font-mono text-[11px]">
+        <div className="flex items-center gap-4 text-[var(--text-secondary)] font-mono text-[11px]">
           <div>
-            <span className="text-slate-500">Bus:</span> {disk.busType}
+            <span className="text-[var(--text-muted)]">Bus:</span> {disk.busType}
           </div>
           <div>
-            <span className="text-slate-500">Style:</span> {disk.partitionStyle}
+            <span className="text-[var(--text-muted)]">Style:</span> {disk.partitionStyle}
           </div>
           <div>
-            <span className="text-slate-500">Sector:</span> {disk.sectorSize}B / {disk.physicalSectorSize}B (4Kn)
+            <span className="text-[var(--text-muted)]">Sector:</span> {disk.sectorSize}B / {disk.physicalSectorSize}B (4Kn)
           </div>
           <div>
-            <span className="text-slate-500">S/N:</span> {disk.serialNumber}
+            <span className="text-[var(--text-muted)]">S/N:</span> {disk.serialNumber}
           </div>
         </div>
       </div>
     </div>
   );
 }
-

@@ -1,10 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /* ==========================================================================
    OpenDisk Manager — Design System & Global Styles
-   Inspired by EaseUS, MiniTool & GParted with Modern Fluent Aesthetics
+   Windows 11 Fluent Design with Dark & Light Theme Support
    ========================================================================== */
 
-:root {
-  /* Color Tokens - Surfaces */
+:root,
+[data-theme="dark"] {
+  /* Surface Color Tokens */
   --bg-app: #090D16;
   --bg-sidebar: #0E1322;
   --bg-surface: #13192B;
@@ -13,6 +18,12 @@
   --border-subtle: #242E49;
   --border-medium: #323F63;
   --border-focus: #3B82F6;
+
+  /* Form Inputs */
+  --input-bg: #13192B;
+  --input-border: #242E49;
+  --input-text: #F8FAFC;
+  --input-focus-border: #3B82F6;
 
   /* Typography Colors */
   --text-primary: #F8FAFC;
@@ -42,6 +53,7 @@
   --part-msr: #475569;
   --part-msr-bg: linear-gradient(135deg, #334155 0%, #475569 100%);
   --part-unallocated: #0F172A;
+  --unallocated-stripe: rgba(51, 65, 85, 0.35);
 
   /* Dimensions & Spacing */
   --sidebar-width: 250px;
@@ -57,27 +69,121 @@
   --shadow-glow: 0 0 25px rgba(59, 130, 246, 0.35);
 }
 
+[data-theme="light"] {
+  /* Surface Color Tokens */
+  --bg-app: #F1F5F9;
+  --bg-sidebar: #FFFFFF;
+  --bg-surface: #FFFFFF;
+  --bg-surface-elevated: #F8FAFC;
+  --bg-surface-hover: #E2E8F0;
+  --border-subtle: #E2E8F0;
+  --border-medium: #CBD5E1;
+  --border-focus: #2563EB;
+
+  /* Form Inputs */
+  --input-bg: #FFFFFF;
+  --input-border: #CBD5E1;
+  --input-text: #0F172A;
+  --input-focus-border: #2563EB;
+
+  /* Typography Colors */
+  --text-primary: #0F172A;
+  --text-secondary: #475569;
+  --text-muted: #94A3B8;
+  --text-inverse: #F8FAFC;
+
+  /* Brand & Status Accents */
+  --accent-primary: #2563EB;
+  --accent-primary-hover: #1D4ED8;
+  --accent-primary-glow: rgba(37, 99, 235, 0.2);
+  
+  --status-healthy: #059669;
+  --status-warning: #D97706;
+  --status-danger: #DC2626;
+  --status-info: #0284C7;
+
+  /* Partition Type Themes */
+  --part-system: #2563EB;
+  --part-system-bg: linear-gradient(135deg, #2563EB 0%, #3B82F6 100%);
+  --part-data: #059669;
+  --part-data-bg: linear-gradient(135deg, #059669 0%, #10B981 100%);
+  --part-efi: #D97706;
+  --part-efi-bg: linear-gradient(135deg, #D97706 0%, #F59E0B 100%);
+  --part-recovery: #7C3AED;
+  --part-recovery-bg: linear-gradient(135deg, #7C3AED 0%, #8B5CF6 100%);
+  --part-msr: #64748B;
+  --part-msr-bg: linear-gradient(135deg, #64748B 0%, #94A3B8 100%);
+  --part-unallocated: #E2E8F0;
+  --unallocated-stripe: rgba(148, 163, 184, 0.35);
+
+  /* Shadows */
+  --shadow-card: 0 4px 16px -2px rgba(0, 0, 0, 0.06);
+  --shadow-dropdown: 0 10px 25px -4px rgba(0, 0, 0, 0.12);
+  --shadow-glow: 0 0 20px rgba(37, 99, 235, 0.15);
+}
+
+/* ==========================================================================
+   Base Elements & Normalization
+   ========================================================================== */
+
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
+html, body {
+  height: 100%;
+  width: 100%;
+}
+
 body {
-  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   background-color: var(--bg-app);
   color: var(--text-primary);
   overflow: hidden;
   user-select: none;
   font-size: 14px;
   line-height: 1.5;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 code, .font-mono {
   font-family: 'JetBrains Mono', monospace;
 }
 
-/* Scrollbar Customization */
+/* ==========================================================================
+   Logo & Brand Safety Rules (Prevents Oversized SVG Dominance)
+   ========================================================================== */
+
+.app-logo {
+  width: 36px !important;
+  height: 36px !important;
+  max-width: 36px !important;
+  max-height: 36px !important;
+  min-width: 36px !important;
+  min-height: 36px !important;
+  flex-shrink: 0 !important;
+  object-fit: contain !important;
+  display: block !important;
+}
+
+.app-logo-lg {
+  width: 56px !important;
+  height: 56px !important;
+  max-width: 56px !important;
+  max-height: 56px !important;
+  min-width: 56px !important;
+  min-height: 56px !important;
+  flex-shrink: 0 !important;
+  object-fit: contain !important;
+  display: block !important;
+}
+
+/* ==========================================================================
+   Scrollbar Customization
+   ========================================================================== */
+
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -96,9 +202,12 @@ code, .font-mono {
   background: var(--text-muted);
 }
 
-/* Glassmorphism Classes */
+/* ==========================================================================
+   Fluent Glassmorphism & Card Styles
+   ========================================================================== */
+
 .glass-panel {
-  background: rgba(19, 25, 43, 0.75);
+  background: var(--bg-surface);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--border-subtle);
@@ -118,18 +227,74 @@ code, .font-mono {
 
 /* Unallocated Stripe Pattern */
 .pattern-unallocated {
-  background-color: #0b1120;
+  background-color: var(--part-unallocated);
   background-image: repeating-linear-gradient(
     -45deg,
-    rgba(51, 65, 85, 0.35),
-    rgba(51, 65, 85, 0.35) 8px,
+    var(--unallocated-stripe),
+    var(--unallocated-stripe) 8px,
     transparent 8px,
     transparent 16px
   );
-  border: 1px dashed rgba(100, 116, 139, 0.6);
+  border: 1px dashed var(--border-medium);
 }
 
-/* Interactive Button Styles */
+/* ==========================================================================
+   Form Controls (Inputs, Selects, Ranges)
+   ========================================================================== */
+
+select, .form-select {
+  appearance: none;
+  background-color: var(--input-bg);
+  color: var(--text-primary);
+  border: 1px solid var(--input-border);
+  border-radius: var(--radius-sm);
+  padding: 6px 30px 6px 10px;
+  font-size: 13px;
+  font-weight: 500;
+  outline: none;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2394A3B8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  background-size: 14px;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+select:focus, .form-select:focus {
+  border-color: var(--input-focus-border);
+  box-shadow: 0 0 0 2px var(--accent-primary-glow);
+}
+
+input[type="text"],
+input[type="number"],
+.form-input {
+  background-color: var(--input-bg);
+  color: var(--text-primary);
+  border: 1px solid var(--input-border);
+  border-radius: var(--radius-sm);
+  padding: 6px 10px;
+  font-size: 13px;
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+.form-input:focus {
+  border-color: var(--input-focus-border);
+  box-shadow: 0 0 0 2px var(--accent-primary-glow);
+}
+
+input[type="range"],
+.form-range {
+  accent-color: var(--accent-primary);
+  cursor: pointer;
+}
+
+/* ==========================================================================
+   Buttons
+   ========================================================================== */
+
 .btn {
   display: inline-flex;
   align-items: center;
@@ -189,12 +354,31 @@ code, .font-mono {
   border-color: var(--status-danger);
 }
 
+.btn-success {
+  background: rgba(16, 185, 129, 0.15);
+  border-color: rgba(16, 185, 129, 0.3);
+  color: #34D399;
+}
+
+.btn-success:hover {
+  background: rgba(16, 185, 129, 0.25);
+  border-color: var(--status-healthy);
+}
+
 .btn-sm {
   padding: 5px 10px;
   font-size: 12px;
 }
 
-/* Status Badges */
+.btn-lg {
+  padding: 10px 18px;
+  font-size: 14px;
+}
+
+/* ==========================================================================
+   Status Badges
+   ========================================================================== */
+
 .badge {
   display: inline-flex;
   align-items: center;
@@ -240,4 +424,3 @@ code, .font-mono {
 .pulse-glow {
   animation: pulseGlow 2.5s infinite ease-in-out;
 }
-

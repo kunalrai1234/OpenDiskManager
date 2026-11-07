@@ -42,6 +42,28 @@ export function App() {
   const [isPendingPanelOpen, setIsPendingPanelOpen] = useState(false);
   const [detectionError, setDetectionError] = useState(null);
 
+  // Appearance & Theme State (Fluent Dark default)
+  const [theme, setTheme] = useState(() => {
+    try {
+      return localStorage.getItem("opendisk_theme") || "dark";
+    } catch {
+      return "dark";
+    }
+  });
+
+  useEffect(() => {
+    try {
+      document.documentElement.setAttribute("data-theme", theme);
+      localStorage.setItem("opendisk_theme", theme);
+    } catch (e) {
+      console.warn("Could not save theme preference:", e);
+    }
+  }, [theme]);
+
+  const handleToggleTheme = () => {
+    setTheme((prev) => (prev === "dark" ? "light" : "dark"));
+  };
+
   // Auto-scan real storage on mount
   useEffect(() => {
     async function loadRealData() {
@@ -187,7 +209,7 @@ export function App() {
   };
 
   return (
-    <div className="flex flex-col h-screen w-screen overflow-hidden bg-[#090D16]">
+    <div className="flex flex-col h-screen w-screen overflow-hidden bg-[var(--bg-app)] text-[var(--text-primary)] transition-colors">
       {/* Top Application Header */}
       <Header
         onRefresh={handleRefresh}
@@ -198,6 +220,8 @@ export function App() {
         onProfileChange={handleProfileChange}
         isRealData={isRealData}
         hostDiskModel={activeDisk ? activeDisk.model : "NVMe Micron 2450"}
+        theme={theme}
+        onToggleTheme={handleToggleTheme}
       />
 
       {/* Main Workspace Body */}
@@ -297,6 +321,8 @@ export function App() {
             <SettingsView
               activeProfile={activeProfile}
               onProfileChange={handleProfileChange}
+              theme={theme}
+              onThemeChange={setTheme}
             />
           )}
 
